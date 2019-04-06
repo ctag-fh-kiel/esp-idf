@@ -21,7 +21,7 @@
 
 #include "ff.h"			/* Declarations of FatFs API */
 #include "diskio.h"		/* Declarations of device I/O functions */
-
+#include "string.h"
 
 /*--------------------------------------------------------------------------
 
@@ -645,6 +645,8 @@ void st_qword (BYTE* ptr, QWORD val)	/* Store an 8-byte word in little-endian */
 static
 void mem_cpy (void* dst, const void* src, UINT cnt)
 {
+	memcpy(dst, src, cnt);
+/*
 	BYTE *d = (BYTE*)dst;
 	const BYTE *s = (const BYTE*)src;
 
@@ -653,6 +655,7 @@ void mem_cpy (void* dst, const void* src, UINT cnt)
 			*d++ = *s++;
 		} while (--cnt);
 	}
+*/
 }
 
 
@@ -660,11 +663,14 @@ void mem_cpy (void* dst, const void* src, UINT cnt)
 static
 void mem_set (void* dst, int val, UINT cnt)
 {
+	memset(dst, val, cnt);
+	/*
 	BYTE *d = (BYTE*)dst;
 
 	do {
 		*d++ = (BYTE)val;
 	} while (--cnt);
+	*/
 }
 
 
@@ -672,14 +678,17 @@ void mem_set (void* dst, int val, UINT cnt)
 static
 int mem_cmp (const void* dst, const void* src, UINT cnt)	/* ZR:same, NZ:different */
 {
+	int r = memcmp(dst, src, cnt);
+	/*
 	const BYTE *d = (const BYTE *)dst, *s = (const BYTE *)src;
 	int r = 0;
 
 	do {
 		r = *d++ - *s++;
 	} while (--cnt && r == 0);
-
+	*/
 	return r;
+	
 }
 
 
